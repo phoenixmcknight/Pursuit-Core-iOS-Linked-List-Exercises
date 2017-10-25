@@ -7,7 +7,6 @@
 //
 
 import XCTest
-
 @testable import LinkedListExercises
 
 class LinkedListExercisesTests: XCTestCase {
@@ -37,7 +36,7 @@ class LinkedListExercisesTests: XCTestCase {
     func testCount() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        XCTAssert(myList.count == 3)
+        XCTAssert(myList.count == 4)
         XCTAssert(emptyList.count == 0)
     }
     
@@ -95,8 +94,9 @@ class LinkedListExercisesTests: XCTestCase {
         mergedList.insert(nodeWithKey: 7, at: 6)
         mergedList.insert(nodeWithKey: 8, at: 7)
         mergedList.insert(nodeWithKey: 9, at: 8)
-        
+
         XCTAssertTrue(LinkedList<Int>.mergeSortedLists(listOne: listOne, listTwo: listTwo).benEquals(otherList: mergedList))
+        XCTAssertTrue(LinkedList<Int>.mergeSortedLists(listOne: listOne, listTwo: listTwo) == mergedList)
     }
     
     func testRemoveDupes() {
@@ -116,6 +116,7 @@ class LinkedListExercisesTests: XCTestCase {
         dupeList.removeDuplicatesFromSortedList()
         
         XCTAssertTrue(dupeList.benEquals(otherList: noDupeList))
+        XCTAssertTrue(dupeList == noDupeList)
         
     }
 
@@ -127,7 +128,7 @@ class LinkedListExercisesTests: XCTestCase {
         myList.insert(nodeWithKey: 40, at: 3)
         myList.insert(nodeWithKey: 50, at: 4)
         XCTAssertTrue(myList.toArr() == [10,20,30,40,50])
-        XCTAssertTrue(emptyList.toArr() == [])
+        XCTAssertTrue(emptyList.toArr() == Array<Int>())
     }
     
     func testReversed() {
@@ -160,6 +161,7 @@ class LinkedListExercisesTests: XCTestCase {
         myList.removeAll()
         
         XCTAssertTrue(myList == emptyList)
+        XCTAssertTrue(myList.benEquals(otherList: emptyList))
     }
     
     func testRemoveNode() {
@@ -209,6 +211,20 @@ extension LinkedList {
         }
         return true
     }
-    
-    
+}
+
+extension LinkedList: Equatable {
+    public static func ==(lhs: LinkedList<T>, rhs: LinkedList<T>) -> Bool {
+        guard lhs.count == rhs.count else { return false }
+
+        var currentNodeLeft = lhs.head
+        var currentNodeRight = rhs.head
+        while currentNodeLeft != nil {
+            guard currentNodeLeft?.key == currentNodeRight?.key else { return false }
+            currentNodeLeft = currentNodeLeft?.next
+            currentNodeRight = currentNodeRight?.next
+        }
+
+        return true
+    }
 }
