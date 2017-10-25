@@ -7,7 +7,6 @@
 //
 
 import XCTest
-
 @testable import LinkedListExercises
 
 class LinkedListExercisesTests: XCTestCase {
@@ -127,7 +126,7 @@ class LinkedListExercisesTests: XCTestCase {
         myList.insert(nodeWithKey: 40, at: 3)
         myList.insert(nodeWithKey: 50, at: 4)
         XCTAssertTrue(myList.toArr() == [10,20,30,40,50])
-        XCTAssertTrue(emptyList.toArr() == [])
+        XCTAssertTrue(emptyList.toArr() == Array<Int>())
     }
     
     func testReversed() {
@@ -160,6 +159,7 @@ class LinkedListExercisesTests: XCTestCase {
         myList.removeAll()
         
         XCTAssertTrue(myList == emptyList)
+//        XCTAssertEqual(myList, emptyList)
     }
     
     func testRemoveNode() {
@@ -209,6 +209,23 @@ extension LinkedList {
         }
         return true
     }
-    
-    
+}
+
+extension LinkedList: Equatable {
+    public static func ==(lhs: LinkedList<T>, rhs: LinkedList<T>) -> Bool {
+        guard lhs.head != nil && rhs.head != nil else { return true }
+
+        var currentNodeLeft = lhs.head
+        var currentNodeRight = rhs.head
+        while currentNodeLeft?.next != nil && currentNodeRight?.next != nil {
+            guard currentNodeLeft?.key == currentNodeRight?.key else { return false }
+            currentNodeLeft = currentNodeLeft?.next!
+            currentNodeRight = currentNodeRight?.next!
+        }
+
+        guard currentNodeLeft?.key == currentNodeRight?.key else { return false }
+        guard currentNodeLeft?.next == nil && currentNodeRight?.next == nil else { return false }
+
+        return true
+    }
 }
