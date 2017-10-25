@@ -36,7 +36,7 @@ class LinkedListExercisesTests: XCTestCase {
     func testCount() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        XCTAssert(myList.count == 3)
+        XCTAssert(myList.count == 4)
         XCTAssert(emptyList.count == 0)
     }
     
@@ -213,7 +213,7 @@ extension LinkedList {
 
 extension LinkedList: Equatable {
     public static func ==(lhs: LinkedList<T>, rhs: LinkedList<T>) -> Bool {
-        guard lhs.head != nil && rhs.head != nil else { return true }
+        guard lhs.head != nil && rhs.head != nil else { return false }
 
         var currentNodeLeft = lhs.head
         var currentNodeRight = rhs.head
