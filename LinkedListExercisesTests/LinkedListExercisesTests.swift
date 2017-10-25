@@ -94,8 +94,9 @@ class LinkedListExercisesTests: XCTestCase {
         mergedList.insert(nodeWithKey: 7, at: 6)
         mergedList.insert(nodeWithKey: 8, at: 7)
         mergedList.insert(nodeWithKey: 9, at: 8)
-        
+
         XCTAssertTrue(LinkedList<Int>.mergeSortedLists(listOne: listOne, listTwo: listTwo).benEquals(otherList: mergedList))
+        XCTAssertTrue(LinkedList<Int>.mergeSortedLists(listOne: listOne, listTwo: listTwo) == mergedList)
     }
     
     func testRemoveDupes() {
@@ -115,6 +116,7 @@ class LinkedListExercisesTests: XCTestCase {
         dupeList.removeDuplicatesFromSortedList()
         
         XCTAssertTrue(dupeList.benEquals(otherList: noDupeList))
+        XCTAssertTrue(dupeList == noDupeList)
         
     }
 
@@ -159,7 +161,7 @@ class LinkedListExercisesTests: XCTestCase {
         myList.removeAll()
         
         XCTAssertTrue(myList == emptyList)
-//        XCTAssertEqual(myList, emptyList)
+        XCTAssertTrue(myList.benEquals(otherList: emptyList))
     }
     
     func testRemoveNode() {
@@ -213,18 +215,15 @@ extension LinkedList {
 
 extension LinkedList: Equatable {
     public static func ==(lhs: LinkedList<T>, rhs: LinkedList<T>) -> Bool {
-        guard lhs.head != nil && rhs.head != nil else { return false }
+        guard lhs.count == rhs.count else { return false }
 
         var currentNodeLeft = lhs.head
         var currentNodeRight = rhs.head
-        while currentNodeLeft?.next != nil && currentNodeRight?.next != nil {
+        while currentNodeLeft != nil {
             guard currentNodeLeft?.key == currentNodeRight?.key else { return false }
-            currentNodeLeft = currentNodeLeft?.next!
-            currentNodeRight = currentNodeRight?.next!
+            currentNodeLeft = currentNodeLeft?.next
+            currentNodeRight = currentNodeRight?.next
         }
-
-        guard currentNodeLeft?.key == currentNodeRight?.key else { return false }
-        guard currentNodeLeft?.next == nil && currentNodeRight?.next == nil else { return false }
 
         return true
     }
