@@ -100,20 +100,8 @@ public class LinkedList<T: Equatable> {
     return arrayOfListed
     }
     func reversed() -> LinkedList<T> {
-//        var arrayOfNodes:[T] = []
-//var currentHead = head
-//        while currentHead != nil {
-//            currentHead = currentHead!.next
-//        }
-//        tail = currentHead
-//        tail.ne
-        var currentHead = head
-        while currentHead != nil {
-        var newCurrentHead = currentHead?.next
-            currentHead!.next = newCurrentHead
-            newCurrentHead?.next = currentHead
+        return LinkedList<T>()
     }
-    return currentHead
     
     func removeAll() {
         head = nil
@@ -121,15 +109,7 @@ public class LinkedList<T: Equatable> {
     
     //Challenge Questions
     func removeDuplicatesFromSortedList() {
-        var arrayOfNodes:[T] = []
-        var currentHead = head
-        while currentHead != nil {
-            if arrayOfNodes.contains(currentHead!.key) == false{
-                arrayOfNodes.append(currentHead!.key)
-            currentHead = currentHead?.next
-        }
-        }
-        return arrayOfNodes
+     
     }
     
     static func mergeSortedLists(listOne: LinkedList<T>, listTwo: LinkedList<T>) -> LinkedList<T> {
