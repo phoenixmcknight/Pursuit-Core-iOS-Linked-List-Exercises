@@ -18,6 +18,7 @@ public class Node<T> {
 
 public class LinkedList<T: Equatable> {
     var head: Node<T>?
+    var tail: Node<T>?
     func printAllKeys() {
         var currentNode = head
         while currentNode != nil {
@@ -26,26 +27,112 @@ public class LinkedList<T: Equatable> {
         }
     }
 
-    var count: Int {return 0}
+    var count: Int {
+        var currentNode = head
+        var count = 0
+        while currentNode != nil {
+            currentNode = currentNode?.next
+            count += 1
+            
+            
+        }
+        return count
+    }
     
-    func append(element newKey: T) {}
+    func append(element newKey: T) {
+        if head == nil {
+            head = Node(key: newKey)
+            return
+        }
+        var currentNode = head
+        while currentNode?.next != nil {
+            currentNode = currentNode?.next
+        }
+        currentNode?.next = Node(key: newKey)
+    }
     
-    func getNode<T>(at index: Int) -> Node<T>? {return nil}
+    func getNode(at index: Int) -> Node<T>? {
+        guard index >= 0 else { return nil }
+        var counter = 0
+        var currentNode = head
+        while counter < index {
+            currentNode = currentNode?.next
+            counter += 1
+        }
+        return currentNode
+    }
     
-    func contains<T>(element targetKey: T) -> Bool {return false}
+    func contains(element targetKey: T) -> Bool {
+        var currentNode = head
+        while currentNode != nil {
+            if currentNode?.key == targetKey { return true }
+            currentNode = currentNode?.next
+        }
+        return false
+    }
     
-    func equals<T>(otherList: LinkedList<T>) -> Bool {return true}
     
-    func toArr<T>() -> [T] {return Array<T>()}
+    func equals(otherList: LinkedList<T>) -> Bool {
+         var currentNode = head
+        var otherNode = otherList.head
+        var boolz = Bool()
+        while currentNode != nil && otherNode != nil {
+            if currentNode!.key == otherNode!.key {
+                boolz = true
+                currentNode = currentNode!.next
+                otherNode = otherNode?.next
+            } else {
+                return false
+            }
+            
+            }
+        return boolz
+        }
     
-    func reversed<T>() -> LinkedList<T> {return LinkedList<T>()}
+    func toArr() -> [T] {
+        var currentNode = head
+        var arrayOfListed:[T] = []
+        while currentNode != nil {
+            arrayOfListed.append(currentNode!.key)
+            currentNode = currentNode?.next
+            
+    }
+    return arrayOfListed
+    }
+    func reversed() -> LinkedList<T> {
+//        var arrayOfNodes:[T] = []
+//var currentHead = head
+//        while currentHead != nil {
+//            currentHead = currentHead!.next
+//        }
+//        tail = currentHead
+//        tail.ne
+        var currentHead = head
+        while currentHead != nil {
+        var newCurrentHead = currentHead?.next
+            currentHead!.next = newCurrentHead
+            newCurrentHead?.next = currentHead
+    }
+    return currentHead
     
-    func removeAll() {}
+    func removeAll() {
+        head = nil
+    }
     
     //Challenge Questions
-    func removeDuplicatesFromSortedList() {}
+    func removeDuplicatesFromSortedList() {
+        var arrayOfNodes:[T] = []
+        var currentHead = head
+        while currentHead != nil {
+            if arrayOfNodes.contains(currentHead!.key) == false{
+                arrayOfNodes.append(currentHead!.key)
+            currentHead = currentHead?.next
+        }
+        }
+        return arrayOfNodes
+    }
     
-    static func mergeSortedLists<T>(listOne: LinkedList<T>, listTwo: LinkedList<T>) -> LinkedList<T> {
+    static func mergeSortedLists(listOne: LinkedList<T>, listTwo: LinkedList<T>) -> LinkedList<T> {
         return LinkedList<T>()
     }
     
